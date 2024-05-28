@@ -1,0 +1,125 @@
+===========================================
+How to Write a JDBC code : Using statement
+===========================================
+Step1: Create a java project in eclipse.
+
+Step2: Add the External MySQL jar
+Right click on Project->Build Path->Configure Build Path->Click on Libraries -> Add External Jar->Select Jar File-> Click on Apply and Close or Apply button.
+
+Step3: Create a table in mysql workbench
+
+CREATE TABLE user (
+id int NOT NULL AUTO_INCREMENT,
+lastName varchar(255) ,
+firstName varchar(255) ,
+address varchar(255),
+city varchar(255) ,
+salary varchar(255) , 
+PRIMARY KEY (`id`)
+);
+
+Step4: Write a program to insert the data into user table.
+- First create try-catch block.
+- Create the SQL Insert query in String format.
+String sql = "insert into user (lastName,firstName,address,city,salary)"
++ "values('pawar','ram','sangavi','pune',5000)";
+- Class.forName("com.mysql.cj.jdbc.Driver");
+- Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/user", "root", "root");
+- Statement statement = con.createStatement();
+- statement.execute(sql);
+- System.out.println("Insertion successfully...");
+- con.close();
+- statement.close();
+
+====================================================
+How to Write a JDBC code : Using prepared statement
+====================================================
+CREATE TABLE employee (
+id int NOT NULL AUTO_INCREMENT,
+username varchar(255) ,
+password varchar(255), 
+PRIMARY KEY (`id`)
+);
+
+Step4: Write a program to insert the data into employee table.
+- First create try-catch block.
+- Class.forName("com.mysql.cj.jdbc.Driver");
+- Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/user", "root", "root");
+- PreparedStatement stmt = con.prepareStatement("insert into employee(username,password)values(?,?)");
+- stmt.setString(1, "admin"); 
+- stmt.setString(2, "guest");
+- int i=stmt.executeUpdate();
+- System.out.println("Insertion successfully...");
+- con.close();
+- statement.close();
+
+
+===================================================
+Different ways of creating object
+1. new keyword.
+2. clone
+3. searialization
+4. new instance
+5. class.forname
+===================================================
+Update query
+Class.forName("com.mysql.cj.jdbc.Driver);
+Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/user", "root", "root");
+PreparedStatement ps = con.prepareStatement("update employee set username =?, password =? where id =?");
+ps.setString(1, "ashok");
+ps.setString(2, "12345");
+ps.setInt(3, 2);
+int i = ps.executeUpdate();
+System.out.println("Record updated ....."+i);
+//Release the resources
+ps.close();
+con.close();
+===================================================
+Delete Query
+//Step1 : Load the driver class
+Class.forName("com.mysql.cj.jdbc.Driver");
+//Step2 : Establish the connection
+Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/user","root","root");
+//Step3 : Create the prepared statment.
+PreparedStatement ps = con.prepareStatement("delete from employee where id =?");
+ps.setInt(1, 2);
+int i = ps.executeUpdate();
+System.out.println("Record deleted ...."+i);
+//close the resources 
+ps.close();
+con.close();
+===================================================
+Retrival Query
+//Step1 : Load the driver class
+Class.forName("com.mysql.cj.jdbc.Driver");
+//Step2 : Establish the connection.
+Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/user","root","root");
+//Step3 : Craete the prepared statment.
+PreparedStatement ps = con.prepareStatement("select * from employee");
+ResultSet rs = ps.executeQuery();
+while(rs.next()) {
+System.out.println("ID:"+rs.getInt(1));
+System.out.println("Username:"+rs.getString(2));
+System.out.println("Password :"+rs.getString(3));
+}
+//close the resources
+con.close();
+ps.close();
+rs.close();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
