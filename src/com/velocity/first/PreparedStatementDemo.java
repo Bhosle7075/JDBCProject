@@ -16,6 +16,8 @@ public class PreparedStatementDemo {
 		// demo.updateData("Vishal", "56yghnl", "1");
 		// demo.deleteData("2");
 		demo.selectData2();
+		
+		System.out.println("Added by devraj ");
 	}
 
 	public void inserData(String user, String pwd) {
@@ -154,7 +156,7 @@ public class PreparedStatementDemo {
 			// Step4 : Create the prepared-statement
 			PreparedStatement pStmt = con.prepareStatement(Query);
 
-			// Step5 : Submit and Exceute
+			// Step5 : Submit and Execute
 			ResultSet rs = pStmt.executeQuery();
 			List<Employee> employees = new ArrayList<Employee>();
 			while (rs.next()) {
